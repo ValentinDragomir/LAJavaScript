@@ -1,0 +1,11 @@
+#p1{
+    font-weight: bold;
+    font-family: 'Alatsi';
+    font-size: 1.2em;
+    text-decoration: underline;
+    text-align: center;
+}
+p{
+    font-weight: normal;
+    line-height: 1.1em
+}
