@@ -1,11 +1,42 @@
+body{
+    box-sizing: border-box;
+}
 #p1{
     font-weight: bold;
     font-family: 'Alatsi';
     font-size: 1.2em;
     text-decoration: underline;
     text-align: center;
+    border: 3px solid burlywood;
+    /*border-width: 3px;*/
+    /*border-style: solid;*/
+    /*border-color: burlywood;*/
+    border-radius: 1em;
+    padding: 5px 10px 20px;
+    margin: auto;
+    background-color: pink;
+    background-image: url(background.gif);
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-size: contain;
+    color: blanchedalmond;
+    /*width: 250px;*/
+    /*height: 250px;*/
 }
 p{
     font-weight: normal;
     line-height: 1.1em
+}
+#p1 span {
+    color: coral;
+}
+div{
+    background-color: burlywood;
+    border: 2px solid black;
+    padding: 10px;
+}
+div div{
+    background-color: lemonchiffon;
+    border: 2px solid blue;
+    width: fit-content;
 }
