@@ -1,0 +1,9 @@
+div.float {
+    float: left;
+    height: 40px;
+    width: 100px;
+    background-color: lightsalmon;
+}
+div:last-child {
+    background-color: lightskyblue;
+}

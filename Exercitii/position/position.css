@@ -1,0 +1,41 @@
+body {
+    height: 1000px;
+}
+div div {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 100px;
+}
+.container {
+    background-color: lightyellow;
+    width: 300px;
+    position: relative;
+    left: 30%;
+}
+div div:first-child {
+    background-color: yellowgreen;
+    position: absolute;
+    right: 20px;
+    top: 50px;
+    z-index: 1;
+}
+div div:nth-child(2) {
+    background-color: lightseagreen;
+    position: fixed;
+    top: 40%;
+    left: 40%;
+}
+div div:nth-child(3) {
+    background-color: palevioletred;
+    position: sticky;
+    top: 5%;
+    left: 5%;
+}
+div div:last-child {
+    background-color: plum;
+    position: relative;
+    bottom: -20px;
+    left: 50%;
+}
