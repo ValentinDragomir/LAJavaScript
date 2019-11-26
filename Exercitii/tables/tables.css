@@ -1,0 +1,25 @@
+table {
+    margin: auto;
+    margin-top: 20px;
+    /* padding: 20px; */
+    border: 2px solid slateblue;
+    background-color: silver;
+    /* border-spacing: 4px; */
+    border-collapse: collapse;
+}
+th {
+    background-color: skyblue;
+    border-bottom: 2px solid slateblue;
+    text-align: left;
+    padding: 10px;
+}
+td {
+    /* background-color: snow; */
+    /* border: 1px solid black; */
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 10px;
+}
+tr:nth-child(even) {
+    background-color: palegoldenrod;
+}
