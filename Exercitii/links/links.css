@@ -39,7 +39,7 @@ a:hover {
     background-color: orange;
     border-radius: 1em;
     position: absolute;
-    top: 50%;
+    top: 75%;
     left: 50%;
     padding: 30px;
     transform: rotate(30deg) scale(2, 2);
@@ -48,4 +48,16 @@ a:hover {
 .trans:hover {
     top: 20%;
     background-color: red;
+    /* transition: transform 1s, background-color 2s; */
+}
+.trans2 {
+    background-color: cornflowerblue;
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    padding: 30px;
+    transform: rotate(-30deg);
+    transform-origin: top left;
+    transition: transform 2s;
+    transition-delay: 1s;
 }
