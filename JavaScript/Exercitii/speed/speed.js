@@ -1,0 +1,45 @@
+var startButton = document.querySelector("input");
+var speed = 2000;
+
+startButton.addEventListener("click", start);
+window.addEventListener("keypress", keyPressed);
+
+function start() {
+    startButton.style.display = "none";
+    newLetter();
+    // console.log(randomLetter());
+    // console.log(randomPosition());
+}
+
+function keyPressed(event) {
+    let letter = event.key;
+    div = document.querySelector("." + letter);
+    document.querySelector("body").removeChild(div);
+}
+
+function newLetter() {
+    let letter = randomLetter();
+    let x = randomPosition();
+    let y = randomPosition();
+    let div = document.createElement("div");
+    div.innerText = letter;
+    div.style.left = x;
+    div.style.top = y;
+    div.className = "boxLetter " + letter;
+    document.querySelector("body").appendChild(div);
+    setTimeout(newLetter, speed);
+}
+
+function randomLetter() {
+    let letters = "abcdefghijklmnopqrstuvwxyz";
+    let position = randomNumber (letters.length);
+    return letters.charAt(position);
+}
+
+function randomPosition() {
+    return randomNumber(95) + "%";
+}
+
+function randomNumber(max) {
+    return Math.round(Math.random() * max);
+}
