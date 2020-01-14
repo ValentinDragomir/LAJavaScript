@@ -86,3 +86,9 @@ body {
     visibility: hidden;
     /* display: none; */
 }
+#letters {
+    font-size: 2em;
+}
+#word {
+    font-size: 2em;
+}
