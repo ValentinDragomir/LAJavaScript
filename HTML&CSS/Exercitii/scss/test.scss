@@ -1,0 +1,26 @@
+@import 'var';
+// @use 'var';
+
+$base_color: green;
+
+nav {
+    ul {
+        background-color: gainsboro;
+        li {
+            display: inline-block;
+        }
+        a {
+            text-decoration: none;
+            color: $secondary_color; // var.$secondary_color;
+            padding: $default_padding * 2;
+        }
+    }
+}
+
+button {
+    background-color: $base_color;
+}
+
+h1 {
+    color: $base_color;
+}
