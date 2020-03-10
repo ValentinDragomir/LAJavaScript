@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap');
+*, *::before, *::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    background-image: url('1.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.title {
+    font-family: 'Libre Baskerville', sans-serif;
+    font-size: 7em;
+    font-weight: 900;
+    color: white;
+}
+.enter {
+    font-family: sans-serif;
+    color: white;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 1.5em;
+}
