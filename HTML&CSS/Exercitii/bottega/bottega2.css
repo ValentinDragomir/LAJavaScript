@@ -21,7 +21,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    visibility: hidden;
+    visibility: visible;
+    transition-duration: 2s;
+    transition-property: left;
 }
 .portfolio {
     z-index: 0;
@@ -86,4 +88,10 @@
     animation-duration: 0.5s;
     animation-iteration-count: 2;
     animation-direction: alternate;
+}
+.slide-out {
+    left: 100vw;
+}
+.slide-in {
+    left: 0;
 }

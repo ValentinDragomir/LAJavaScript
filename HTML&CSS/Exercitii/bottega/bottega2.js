@@ -15,10 +15,28 @@ function spanTitle() {
     });
     return spans;
 }
-let spans = spanTitle();
-spans.sort( function() { return 0.5 - Math.random() } );
-let spansToAnimate = spans.slice(0, 6);
+function shuffle(array) {
+    array.sort( () => 0.5 - Math.random() );
+}
+
+let originalSpans = spanTitle();
+let oddOrEven = Math.round(Math.random())
+let spans = originalSpans.filter( (value, index) => index % 2 == oddOrEven );
+shuffle(spans);
+let spansToAnimate = spans.slice(0, 5);
 spansToAnimate.forEach(span => span.classList.add('bounce'));
+
+function slideOut() {
+    document.querySelector('.welcome').classList.add('slide-out');
+    document.querySelector('.welcome').classList.remove('slide-in');
+}
+function slideIn() {
+    document.querySelector('.welcome').classList.add('slide-in');
+    document.querySelector('.welcome').classList.remove('slide-out');
+}
+
+document.querySelector('.welcome').addEventListener('click', slideOut);
+document.querySelector('.back').addEventListener('click', slideIn);
 
 // let mySpan = spans[1];
 // mySpan.classList.add('bounce');
