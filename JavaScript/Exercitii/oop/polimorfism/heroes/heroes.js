@@ -6,7 +6,7 @@ class Hero {
     }
     firePrimary(anotherHero) {}
     fireSecondary(anotherHero) {}
-    receiveHit(enrgy) {}
+    receiveHit(energy) {}
     isAlive() {
         return this.life > 0;
     }

@@ -37,6 +37,7 @@ li:last-child {
 }
 .new_task {
     margin-top: 1em;
+    text-align: right;
 }
 .save_task {
     display: flex;
@@ -57,5 +58,35 @@ input[type="text"] {
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     padding: 0.5em;
-    width: 80%;
+    width: 85%;
+}
+.task {
+    display: flex;
+    justify-content: space-between;
+}
+.controls {
+    display: flex;
+}
+.controls div {
+    border-radius: 0.1em;
+    width: 1em;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    margin-left: 0.2em;
+}
+.check {
+    background-color: rgb(51, 206, 85);
+}
+.delete {
+    background-color: rgb(238, 83, 83);
+}
+.task.done .title {
+    color: #888;
+    text-decoration: line-through;
+}
+.filters {
+    text-align: right;
+    margin-bottom: 0.5em;
 }
