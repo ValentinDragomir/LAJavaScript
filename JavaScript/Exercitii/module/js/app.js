@@ -1,7 +1,8 @@
 // import {} from 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js';
 // import * as All from './superman.js';
-import { Superman } from './superman.js';
-import { Mage } from './mage.js';
+import { Superman} from './superman.js';
+import { Superman as AnotherSuperman } from './superman.js';
+import Mage from './mage.js';
 
 // var clark = new All.Superman("Clark Kent", 1000, 1000);
 var clark = new Superman("Clark Kent", 1000, 1000);
