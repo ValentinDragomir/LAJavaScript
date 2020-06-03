@@ -1,13 +1,20 @@
 import 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js'
 import 'https://cdn.jsdelivr.net/npm/vuex/dist/vuex.js'
-import store from '../vue/state/todo/js/store/store'
+
+class Answer {
+    constructor(id, text) {
+        this.id = id
+        this.text = text
+    }
+}
 
 class Question {
-    constructor(answers, correctAnswer) {
+    constructor(text, answers, correctAnswer) {
         this.text = text
         this.answers = answers
         this.correctAnswer = correctAnswer
         this.answer = null
+        this.shuffleAnswers()
     }
     giveAnswer(answer) {
         this.answer = answer
@@ -21,6 +28,14 @@ class Question {
         }
         return 0
     }
+    isSelectedAnswer(answer) {
+        return this.answer == answer
+    }
+    shuffleAnswers() {
+        this.answers.sort(function() {
+            return .5 - Math.random()
+        })
+    }
 }
 
 class Quiz {
@@ -31,17 +46,24 @@ class Quiz {
     }
     answerQuestion(answer) {
         if (this.finished) {
-            return;
+            return
         }
-        this.question[this.activeQuestion].giveAnswer(answer)
+        this.questions[this.activeQuestion].giveAnswer(answer)
+    }
+    next() {
         if (this.isLastQuestion()) {
-            this.finished()
+            this.finish()
         } else {
-        this.activeQuestion++
+            this.activeQuestion++
+        }
+    }
+    back() {
+        if (this.activeQuestion > 0) {
+            this.activeQuestion--
         }
     }
     isLastQuestion() {
-        return this.activeQuestion = this.questions.length - 1
+        return this.activeQuestion == this.questions.length - 1
     }
     finish() {
         this.finished = true
@@ -52,29 +74,42 @@ class Quiz {
             0
         )
     }
+    getActiveQuestion() {
+        return this.questions[this.activeQuestion]
+    }
 }
 
-new Vuex.Store({
+const store = new Vuex.Store({
     state: {
         quiz: new Quiz(
             [
                 new Question(
                     'Cati litri de apa e bine sa bei pe zi?',
                     [
-                        '1 litry',
-                        '0.5 litri',
-                        '2 litri',
-                        '5 litri'
+                        new Answer(1, '1 litru'),
+                        new Answer(2, '0.5 litri'),
+                        new Answer(3, '2 litri'),
+                        new Answer(4, '5 litri')
                     ],
                     3
                 ),
                 new Question(
                     'Cum se poate modifica starea din Vuex?',
                     [
-                        'folosind mutatii',
-                        'modificand direct proprietatile starii',
-                        'apeland direct metoda din mutattions',
-                        'starea nu se poate modifica'
+                        new Answer(1, 'folosind mutatii'),
+                        new Answer(2, 'modificand direct proprietatile starii'),
+                        new Answer(3, 'apeland direct metoda din mutattions'),
+                        new Answer(4, 'starea nu se poate modifica')
+                    ],
+                    1
+                ),
+                new Question(
+                    'Cum se poate face two-way-binding in Vue?',
+                    [
+                        new Answer(1, 'folosind atributul v-model'),
+                        new Answer(2, 'nu se poate face two-way-binding in Vue'),
+                        new Answer(3, 'folosind atributul v-data'),
+                        new Answer(4, 'folosind v-two-way-binding')
                     ],
                     1
                 )
@@ -82,27 +117,57 @@ new Vuex.Store({
         )
     },
     mutations: {
-        answerQuestion: (state, answer) => state.quiz.answerQuestion(answer)
+        answerQuestion: (state, answer) => state.quiz.answerQuestion(answer),
+        next: (state) => state.quiz.next(),
+        back: (state) => state.quiz.back()
     },
     getters: {
-        currentQuestionAnswers: (state) => state.quiz.question[state.quiz.activeQuestion].answers,
+        activeQuestion: (state) => state.quiz.getActiveQuestion(),
         isQuizFinished: (state) => state.quiz.finished,
-        quizScore: (state) => state.calculateScore
+        quizScore: (state) => state.quiz.calculateScore()
     }
 })
 
 const quiz = {
     template: `
-    
+        <div>
+            <div v-if="isQuizFinished">
+                Scorul tau este: {{ quizScore }}
+            </div>
+            <div v-else>
+                <p>{{ activeQuestion.text }} </P>
+                <ol>
+                    <li
+                        v-for="(answer) in activeQuestion.answers"
+                        :key="answer.id"
+                        @click="answerQuestion(answer.id)"
+                        :class="{ selected : activeQuestion.isSelectedAnswer(answer.id) }"
+                    >
+                    {{ answer.text }}
+                    </li>
+                </ol>
+                <input type="button" @click="back" value="Back"></input>
+                <input type="button" @click="next" value="Next"></input>
+            </div>
+        </div>
     `,
     methods: {
-        answerQuestion(answer) {
-            store.commit('answerQuestion', answer)
-        }
+        answerQuestion: (answer) => store.commit('answerQuestion', answer),
+        next: () => store.commit('next'),
+        back: () => store.commit('back')
     },
     computed: {
-        currentQuestionAnswers: () => store.state.getters.currentQuestionAnswers,
-        isQuizFinished: () => store.state.getters.isQuizFinished,
-        quizScore: () => store.state.getters.quizScore
+        activeQuestion: () => store.getters.activeQuestion,
+        isQuizFinished: () => store.getters.isQuizFinished,
+        quizScore: () => store.getters.quizScore
     }
 }
+
+new Vue({
+    el: '#app',
+    components: {quiz},
+    store,
+    template: `
+        <quiz></quiz>
+    `
+})
