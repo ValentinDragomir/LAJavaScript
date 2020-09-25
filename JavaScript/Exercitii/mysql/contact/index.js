@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 var con = mysql.createConnection({
     host: "localhost",
     user: "myuser",
-    paswword: "1234",
+    password: "1234",
     database: "gregs_list"
 })
 
@@ -23,9 +23,15 @@ con.connect((err) => {
 // inregistreaza rutele
 app.post("/contact", (req, res) => {
     console.log(req.body)
-    con.query(`INSERT INTO contact
-               VALUES(NULL, '${req.body.name}', '${req.body.email}', '${req.body.message}')`),
-               (err, result, fields) => {}
+    con.query(
+        "INSERT INTO contact VALUES(NULL, ?, ?, ?)",
+        [
+            req.body.name,
+            req.body.email,
+            req.body.message
+        ])
+        // varianta nesecurizata (predispusa la SQL Injection):
+        // "INSERT INTO contact VALUES(NULL, '${req.body.name}', '${req.body.email}', '${req.body.message}')")
     // dam raspuns 200 OK
     res.sendStatus(200)
 })
