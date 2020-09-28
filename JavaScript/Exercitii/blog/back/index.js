@@ -25,9 +25,10 @@ con.connect((err) => {
 })
 
 // genereaza un token de login
-function generateToken(email) {
+function generateToken(email, role) {
     let data = {
-        email: email
+        email: email,
+        role: role
     }
     return jwt.sign(data, secret)
 }
@@ -44,12 +45,27 @@ function verifyLogin(req, res) {
     return true
 }
 
+function verifyAdmin(req, res) {
+    try {
+        jwt.verify(req.token, secret)
+        var decoded = jwt.decode(req.token)
+        if (decoded.role != 'admin') {
+            throw new Error('Unauthorized')
+        }
+    } catch(err) {
+        // unauthorized
+        res.sendStatus(401)
+        return false
+    }
+    return true
+}
+
 // inregistreaza rutele:
 
 // sign-up
 app.post("/user", (req, res) => {
     con.query(
-        "INSERT INTO users VALUES(NULL, ?, ?, sha1(?))",
+        "INSERT INTO users VALUES(NULL, ?, ?, sha1(?), 'viewer')",
         [req.body.email, req.body.name, req.body.password],
         (err, result) => {
             if (err) {
@@ -76,7 +92,8 @@ app.get("/user/login", (req, res) => {
                    .send({
                        name: result[0].name,
                        email: result[0].email,
-                       token: generateToken(email)
+                       isAdmin: result[0].role == 'admin',
+                       token: generateToken(result[0].email, result[0].role)
                    })
             }
             else res.sendStatus(400)
@@ -87,7 +104,7 @@ app.get("/user/login", (req, res) => {
 
 // add a new post
 app.post("/posts", (req, res) => {
-    if (!verifyLogin(req, res)) {
+    if (!verifyAdmin(req, res)) {
         return
     }
     con.query(
@@ -124,7 +141,7 @@ app.get("/posts/:id", (req, res) => {
 
 // update a post
 app.put("/posts/:id", (req, res) => {
-    if (!verifyLogin(req, res)) {
+    if (!verifyAdmin(req, res)) {
         return
     }
     con.query(
@@ -143,7 +160,7 @@ app.put("/posts/:id", (req, res) => {
 
 // delete a post
 app.delete("/posts/:id", (req, res) => {
-    if (!verifyLogin(req, res)) {
+    if (!verifyAdmin(req, res)) {
         return
     }
     con.query(

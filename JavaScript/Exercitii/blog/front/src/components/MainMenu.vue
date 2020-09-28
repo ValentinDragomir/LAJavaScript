@@ -3,7 +3,7 @@
         <header>
             <ul>
                 <li><router-link to="/posts/view">View posts</router-link></li>
-                <li><router-link to="/posts/add">Add new post</router-link></li>
+                <li v-if="isAdmin"><router-link to="/posts/add">Add new post</router-link></li>
                 <li><a @click="logout" href="#">Logout {{ name }}</a></li>
             </ul>
         </header>
@@ -21,6 +21,9 @@ export default {
     computed: {
         name() {
             return this.$store.state.user.name
+        },
+        isAdmin() {
+            return this.$store.state.user.isAdmin
         }
     }
 }

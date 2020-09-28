@@ -8,7 +8,8 @@ export default new Vuex.Store({
         user: {
             name: null,
             email: null,
-            token: null
+            token: null,
+            isAdmin: false
         }
     },
     mutations: {
@@ -20,7 +21,8 @@ export default new Vuex.Store({
             state.user = {
                 name: null,
                 email: null,
-                token: null
+                token: null,
+                isAdmin: false
             }
             localStorage.removeItem('blog_user')
         },
